@@ -288,6 +288,9 @@ class Main:
 
         if data["type"] == "folder":
             children_ids: List[str] = data["childrenIds"]
+            
+            self._createDir(data["name"])
+            chdir(data["name"])
 
             for child_id in children_ids:
                 child: Dict = data["children"][child_id]
