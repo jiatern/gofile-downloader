@@ -58,7 +58,7 @@ class Main:
         if self._downloaddir and path.exists(self._downloaddir):
             chdir(self._downloaddir)
 
-        self._root_dir: str = path.join(getcwd(), self._id)
+        self._root_dir: str = getcwd()
         self._token: str = self._getToken()
         self._password: str | None = sha256(password.encode()).hexdigest() if password else None
         self._max_workers: int = max_workers
@@ -66,8 +66,6 @@ class Main:
         # list of dictionaries format files and its respective path, filename and link
         self._files_link_list: List[Dict] = []
 
-        self._createDir(self._id)
-        chdir(self._id)
         self._parseLinks(self._id, self._token, self._password)
         self._threadedDownloads()
 
@@ -289,9 +287,6 @@ class Main:
 
         if data["type"] == "folder":
             children_ids: List[str] = data["childrenIds"]
-
-            self._createDir(data["name"])
-            chdir(data["name"])
 
             for child_id in children_ids:
                 child: Dict = data["children"][child_id]
